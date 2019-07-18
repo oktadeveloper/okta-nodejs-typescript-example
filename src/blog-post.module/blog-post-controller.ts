@@ -1,5 +1,5 @@
 import { Body, Controller, Get, NotFoundException, Param, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiModelProperty, ApiResponse } from '@nestjs/swagger';
+import { ApiModelProperty, ApiResponse } from '@nestjs/swagger';
 import { IsAuthenticatedGuard } from '../auth.module/is-authenticated-guard';
 import { IsNotEmpty } from 'class-validator';
 import { getUserById } from '../auth.module/okta-client';
@@ -40,7 +40,6 @@ export default class BlogPostController {
   }
 
   @Post()
-  @ApiBearerAuth()
   @ApiResponse({ type: BlogPost, status: 201 })
   @UseGuards(IsAuthenticatedGuard)
   create(@Body() blogPostDto: BlogPostDto, @Req() req): BlogPost {
