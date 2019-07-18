@@ -1,8 +1,7 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiModelProperty, ApiResponse } from '@nestjs/swagger';
+import { Body, Controller, Get, NotFoundException, Param, Post, Req } from '@nestjs/common';
+import { ApiModelProperty, ApiResponse } from '@nestjs/swagger';
 
-import { IsAuthenticatedGuard } from '../auth.module/is-authenticated-guard';
-import { getUserById, ISession, register, sessionLogin } from '../auth.module/okta-client';
+import { getUserById, register, sessionLogin } from '../auth.module/okta-client';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { Request } from 'express';
 
@@ -40,15 +39,6 @@ export class UserRegisterDto {
 
 @Controller('users')
 export default class UserController {
-  @ApiBearerAuth()
-  @ApiResponse({ type: User, status: 200 })
-  @UseGuards(IsAuthenticatedGuard)
-  @Get('/me')
-  async me(@Req() request): Promise<User> {
-    const { userId } = request.auth as ISession;
-    return await getUserById(userId);
-  }
-
   @ApiResponse({ type: User, status: 201 })
   @Post()
   async create(@Body() userData: UserRegisterDto, @Req() request: Request): Promise<User> {
