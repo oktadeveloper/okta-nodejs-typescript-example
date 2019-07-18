@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiModelProperty, ApiResponse } from '@nestjs/swagger';
 import { IsAuthenticatedGuard } from '../auth.module/is-authenticated-guard';
 import { IsNotEmpty } from 'class-validator';
 import { getUserById } from '../auth.module/okta-client';
-import { User } from '../user.module/user.controller';
+import { User } from '../user.module/user-controller';
 
 export class BlogPost {
   @ApiModelProperty()
@@ -32,7 +32,7 @@ export class BlogPostDto {
 export const blogPosts = new Array<BlogPost>();
 
 @Controller('blog-posts')
-export class BlogPostController {
+export default class BlogPostController {
   @Get()
   @ApiResponse({ type: BlogPost, status: 200, isArray: true })
   findAll(): Array<BlogPost> {

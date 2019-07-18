@@ -39,7 +39,7 @@ export class UserRegisterDto {
 }
 
 @Controller('users')
-export class UserController {
+export default class UserController {
   @ApiBearerAuth()
   @ApiResponse({ type: User, status: 200 })
   @UseGuards(IsAuthenticatedGuard)

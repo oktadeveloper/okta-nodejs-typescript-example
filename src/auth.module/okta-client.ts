@@ -1,5 +1,3 @@
-require('dotenv/config');
-
 import { Client as OktaClient } from '@okta/okta-sdk-nodejs';
 import OktaAuth from '@okta/okta-auth-js';
 

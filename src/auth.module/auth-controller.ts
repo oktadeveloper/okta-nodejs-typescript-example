@@ -1,8 +1,13 @@
-import { Body, Controller, Post, Req, Res, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Post, Req, UnauthorizedException } from '@nestjs/common';
 import { ApiModelProperty, ApiResponse } from '@nestjs/swagger';
 import { sessionLogin } from './okta-client';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 
+/*
+ DTO is short for Data Transfer Object
+ DTO is an object that carries data between processes
+ In the context of web apps, it's used to document type of data to be transferred between backend and frontend
+ */
 export class LoginDto {
   @ApiModelProperty()
   email: string;
@@ -23,7 +28,7 @@ export class LoginResponseDto {
 }
 
 @Controller('login')
-export class AuthController {
+export default class AuthController {
   @Post()
   @ApiResponse({ type: LoginResponseDto, status: 201 })
   async login(@Body() data: LoginDto, @Req() request: Request): Promise<LoginResponseDto> {

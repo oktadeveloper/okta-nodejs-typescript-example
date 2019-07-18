@@ -1,13 +1,16 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
+import glob from 'glob';
 
-import { AuthModule } from './auth.module';
-import { BlogPostModule } from './blog-post.module';
 import { AuthMiddleware } from './auth.module/auth-middleware';
-import { UserModule } from './user.module';
+
+const controllers =
+  glob.sync('*.module/*-controller.ts', { cwd: __dirname, absolute: true })
+    .map(require)
+    .map(imported => imported.default);
 
 @Module({
-  imports: [AuthModule, BlogPostModule, UserModule],
+  controllers
 })
 export class ApplicationModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
